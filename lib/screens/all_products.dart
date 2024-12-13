@@ -1,3 +1,4 @@
+import 'package:f27_api/screens/add_product_page.dart';
 import 'package:flutter/material.dart';
 
 import '../api/api_services.dart';
@@ -18,6 +19,18 @@ class _AllProductsState extends State<AllProducts> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("All Products"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddProductPage(),
+            ),
+          );
+        },
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.add),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
