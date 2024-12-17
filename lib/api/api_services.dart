@@ -90,23 +90,44 @@ class APIServices {
     try {
       final response = await http.put(
         Uri.parse(url),
-        headers: {"Content-Type" : "application/json"},
+        headers: {"Content-Type": "application/json"},
         body: json.encode(product.toJson()), // pass a map to convert into json
       );
 
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         print("Response : ${response.body}");
         // using response.body inbuilt decoder will create json map then it will
         // pass into fromJson() to convert map into dart obj
-        ProductModel updatedProduct  = ProductModel.fromJson(json.decode(response.body));
+        ProductModel updatedProduct =
+            ProductModel.fromJson(json.decode(response.body));
         return updatedProduct;
       } else {
-        print("Failed to update the product. Status code : ${response.statusCode}");
+        print(
+            "Failed to update the product. Status code : ${response.statusCode}");
         throw Exception("Failed to update the product");
       }
     } catch (err) {
       print("Error : $err");
       throw Exception("Failed to update the product");
+    }
+  }
+
+  // Delete a product from the api
+  Future<void> deleteProduct(int id) async {
+    final String url = "https://fakestoreapi.com/products/$id";
+
+    try {
+      final response = await http.delete(Uri.parse(url));
+      print("Response code : ${response.statusCode}");
+      if(response.statusCode == 200){
+        print("Response body : ${response.body}");
+      } else {
+        print("Failed to delete product. Status code : ${response.statusCode}");
+        throw Exception("Failed to delete product");
+      }
+    } catch (err){
+      print("Error : $err");
+      throw Exception("Failed to delete the product");
     }
   }
 }
