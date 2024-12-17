@@ -1,3 +1,4 @@
+import 'package:f27_api/screens/edit_product_page.dart';
 import 'package:flutter/material.dart';
 
 import '../api/api_services.dart';
@@ -23,10 +24,12 @@ class SingleProductPage extends StatelessWidget {
           future: apiServices.fetchSingleProduct(productId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return  Center(
+              return Center(
                 child: Column(
                   children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.4,), // bcs we used single child scroll view
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.4,
+                    ), // bcs we used single child scroll view
                     const CircularProgressIndicator(),
                   ],
                 ),
@@ -53,13 +56,43 @@ class SingleProductPage extends StatelessWidget {
                       height: 400,
                       fit: BoxFit.cover,
                     ),
-                    const SizedBox(height: 16,),
-                    Text(singleProduct.title, style: const TextStyle(fontSize: 24),),
-                    const SizedBox(height: 8,),
-                    Text("\$${singleProduct.price}", style: const TextStyle(fontSize: 20)),
-                    const SizedBox(height: 8,),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      singleProduct.title,
+                      style: const TextStyle(fontSize: 24),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text("\$${singleProduct.price}",
+                        style: const TextStyle(fontSize: 20)),
+                    const SizedBox(
+                      height: 8,
+                    ),
                     Text(singleProduct.description),
-                    const SizedBox(height: 16,)
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    EditProductPage(product: singleProduct),
+                              ),
+                            );
+                          },
+                          child: Text("Update"),
+                        ),
+                        ElevatedButton(onPressed: () {}, child: Text("Delete"))
+                      ],
+                    ),
                   ],
                 ),
               );
